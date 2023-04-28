@@ -11,10 +11,10 @@ reddit = praw.Reddit(client_id='HFe49kpE24lryrjVxKvl4g',
 subreddit = reddit.subreddit('robotics')
 
 # select the keyword(s) you want to look for in the subreddit
-keywordsSubreddit = ['trust']
+keywordsSubreddit = []
 
 # select the keyword(s) you want to look for in the comments
-keywordsComments = ['']
+keywordsComments = ['trust']
 
 
 # Checks if the keyword(s) are in the comments or replies and prints the comments
@@ -22,12 +22,18 @@ def print_comment(commentar, indent=0):
     if all(keyword in commentar.body for keyword in keywordsComments):
         print('Kommentar: ' + '  ' * indent + commentar.body)
     for reply in commentar.replies:
-        if all(keyword in reply.body for keyword in keywordsComments):
-            print_comment(reply, indent + 1)
+       # if all(keyword in reply.body for keyword in keywordsComments):
+        print_comment(reply, indent + 1)
 
 
 # goes through all the posts with the keyword(s) and prints its comments
-for post in subreddit.search(' '.join(keywordsSubreddit)):
+
+if not keywordsSubreddit:
+    posts = subreddit.new(limit=None)
+else:
+    posts = subreddit.search(' '.join(keywordsSubreddit))
+
+for post in posts:
 
     print('Titel:' + post.title)
     submission = reddit.submission(post.id)
