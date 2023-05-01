@@ -3,7 +3,7 @@ import csv
 
 with open('output.csv', mode='w', encoding='utf-8', newline='') as file:
     csv_writer = csv.writer(file)
-    csv_writer.writerow((['Index', 'Title']))
+    csv_writer.writerow((['Index', 'Title', 'Comments']))
 
     # creates a reddit instance
     reddit = praw.Reddit(client_id='HFe49kpE24lryrjVxKvl4g',
@@ -22,12 +22,16 @@ with open('output.csv', mode='w', encoding='utf-8', newline='') as file:
     keywordsComments = []
 
     # Checks if the keyword(s) are in the comments or replies and prints the comments
-    def print_comment(comment_to_print, indent=0):
+    def get_comments_from_posts(comment_to_print):
+
+        listi2 = []
+
         if all(keyword in comment_to_print.body for keyword in keywordsComments):
-            print('comment: ' + '  ' * indent + comment_to_print.body)
+            listi2.append(comment_to_print.body)
         for reply in comment_to_print.replies:
             if all(keyword in reply.body for keyword in keywordsComments):
-                print_comment(reply, indent + 1)
+                listi2 += get_comments_from_posts(reply)
+        return listi2
 
 
     # goes through all the posts with the keyword(s) and prints its comments
@@ -47,11 +51,14 @@ with open('output.csv', mode='w', encoding='utf-8', newline='') as file:
         submission = reddit.submission(post.id)
         submission.comments.replace_more(limit=None)
 
+        listi = []
+
         for comment in submission.comments.list():
-            print_comment(comment)
+            listi.extend(get_comments_from_posts(comment))
 
         counter += 1
 
-        csv_writer.writerow([counter, post.title])
+        csv_writer.writerow([counter, listi])
+
 
 file.close()
