@@ -18,12 +18,12 @@ keywordsComments = ['trust']
 
 
 # Checks if the keyword(s) are in the comments or replies and prints the comments
-def print_comment(commentar, indent=0):
-    if all(keyword in commentar.body for keyword in keywordsComments):
-        print('Kommentar: ' + '  ' * indent + commentar.body)
-    for reply in commentar.replies:
-       # if all(keyword in reply.body for keyword in keywordsComments):
-        print_comment(reply, indent + 1)
+def print_comment(comment_to_print, indent=0):
+    if all(keyword in comment_to_print.body for keyword in keywordsComments):
+        print('comment: ' + '  ' * indent + comment_to_print.body)
+    for reply in comment_to_print.replies:
+        if all(keyword in reply.body for keyword in keywordsComments):
+            print_comment(reply, indent + 1)
 
 
 # goes through all the posts with the keyword(s) and prints its comments
@@ -35,7 +35,7 @@ else:
 
 for post in posts:
 
-    print('Titel:' + post.title)
+    print('title:' + post.title)
     submission = reddit.submission(post.id)
     submission.comments.replace_more(limit=None)
 
