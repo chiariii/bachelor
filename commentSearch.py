@@ -31,13 +31,14 @@ with open('output.csv', mode='w', encoding='utf-8', newline='') as file:
         for reply in comment_to_print.replies:
             if all(keyword in reply.body for keyword in keywordsComments):
                 listi2 += get_comments_from_posts(reply)
+
         return listi2
 
 
     # goes through all the posts with the keyword(s) and prints its comments
 
     limitAll = None
-    limitKeywords = 10
+    limitKeywords = 2
 
     if not keywordsSubreddit:  # if you want to search for comments
         posts = subreddit.new(limit=limitAll)
@@ -58,7 +59,6 @@ with open('output.csv', mode='w', encoding='utf-8', newline='') as file:
 
         counter += 1
 
-        csv_writer.writerow([counter, listi])
-
+        csv_writer.writerow([counter, submission.title, *listi])
 
 file.close()
