@@ -16,49 +16,52 @@ with open('output.csv', mode='w', encoding='utf-8', newline='') as file:
     subreddit = reddit.subreddit('robotics')
 
     # select the keyword(s) you want to look for in the subreddit
-    keywordsSubreddit = ['trust']
+    # leave empty if you want to search all comments in the subreddit
+    keywordsSubreddit = ['reliability']
 
     # select the keyword(s) you want to look for in the comments
-    keywordsComments = ['trust']
+    # leave empty if you want all comments from a post
+    keywordsComments = []
 
-    # Checks if the keyword(s) are in the comments or replies and prints the comments
-    def get_comments_from_posts(comment_to_print):
+    # Checks if the keyword(s) are in the comment/replies
+    # Returns a list with the matching comment/replies
+    def get_comments_from_post(input_comment):
 
-        listi2 = []
+        comment_list = []
 
-        if all(keyword in comment_to_print.body for keyword in keywordsComments):
-            listi2.append(comment_to_print.body)
-        for reply in comment_to_print.replies:
+        if all(keyword in input_comment.body for keyword in keywordsComments):
+            comment_list.append(input_comment.body)
+        for reply in input_comment.replies:
             if all(keyword in reply.body for keyword in keywordsComments):
-                listi2 += get_comments_from_posts(reply)
+                comment_list += get_comments_from_post(reply)
 
-        return listi2
+        return comment_list
 
 
     # goes through all the posts with the keyword(s) and prints its comments
 
     limitAll = None
-    limitKeywords = 10
+    limitKeywords = None
 
-    if not keywordsSubreddit:  # if you want to search for comments
+    if not keywordsSubreddit:  # if you want to search for comments in the entire subreddit
         posts = subreddit.new(limit=limitAll)
     else:  # if you want to search for posts
         posts = subreddit.search(' '.join(keywordsSubreddit), limit=limitKeywords)
 
     counter = 0
 
-    for post in posts:
+    for item in posts:
 
-        submission = reddit.submission(post.id)
-        submission.comments.replace_more(limit=None)
+        post = reddit.submission(item.id)
+        post.comments.replace_more(limit=None)
 
-        listi = []
+        list_of_comments = []
 
-        for comment in submission.comments.list():
-            listi.extend(get_comments_from_posts(comment))
+        for comment in post.comments.list():
+            list_of_comments.extend(get_comments_from_post(comment))
 
         counter += 1
 
-        csv_writer.writerow([counter, submission.title, submission.selftext, *listi])
+        csv_writer.writerow([counter, post.title, post.selftext, *list_of_comments])
 
 file.close()
