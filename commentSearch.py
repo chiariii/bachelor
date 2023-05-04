@@ -1,7 +1,7 @@
 import praw
 import csv
 
-with open('output.csv', mode='w', encoding='utf-8', newline='') as file:
+with open('postSearch.csv', mode='w', encoding='utf-8', newline='') as file:
     csv_writer = csv.writer(file)
     csv_writer.writerow((['Index', 'Title', 'Text', 'Comments']))
 
