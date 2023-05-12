@@ -12,7 +12,7 @@ with open('subredditsSearch.csv', mode='w', encoding='utf-8', newline='') as fil
                          username='Famous-Jellyfish8889',
                          password='bachelor.0401')
 
-    keyword = "robot"
+    keyword = "moral"
 
     search_results = reddit.subreddits.search(keyword, limit = None)
 
