@@ -68,9 +68,8 @@ with open('postSearch.csv', mode='w', encoding='utf-8', newline='') as file:
                     comment_list.append(input_comment.body)
         else:
             if robot_string in input_comment.body:
-                for single_keyword in keywords_comments:
-                    if single_keyword in input_comment.body:
-                        comment_list.append(input_comment.body)
+                if any(single_keyword in input_comment.body for single_keyword in keywords_comments):
+                    comment_list.append(input_comment.body)
 
         return comment_list
 
