@@ -86,16 +86,16 @@ with open('postSearch.csv', mode='w', encoding='utf-8', newline='') as file:
 
         if not keywords_posts:  # if you want to search for comments in the entire subreddit
             print('Comment')
-            empty_list = subreddit.new(limit=100)
+            empty_list = subreddit.new(limit=None)
         else:  # if you want to search for posts
             if robotic_subreddit:
                 print('post-robotic')
-                for keyword123 in keywords_posts:
-                    empty_list.extend(subreddit.search(keyword123, limit=None))
+                for keyword in keywords_posts:
+                    empty_list.extend(subreddit.search(keyword, limit=None))
             else:
                 print('post-not robotic')
-                for keyword123 in keywords_posts:
-                    empty_list.extend(subreddit.search(f"{keyword123} AND {robot_string}", limit=3))
+                for keyword in keywords_posts:
+                    empty_list.extend(subreddit.search(f"{keyword} AND {robot_string}", limit=None))
         return empty_list
 
 
