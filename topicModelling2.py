@@ -4,14 +4,16 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import string
 import gensim
 from gensim import corpora
-from wordcloud import WordCloud
+import os
 
-# load data
-data = pd.read_csv('DystopianFuture_Posts.csv')
+# Load the data
+csv_file_path = os.path.join("Posts", "AIethics_Posts.csv")
+data = pd.read_csv(csv_file_path)
+data.drop_duplicates(inplace=True)
 
 # Cleaning and preprocessing
 stop = set(stopwords.words('english'))
-# stop.add("i'm")
+stop.add("i'm")
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
 
@@ -23,7 +25,7 @@ def clean(doc):
     return normalized
 
 
-data_clean = [clean(doc).split() for doc in data['Header']]
+data_clean = [clean(doc).split() for doc in data.iloc[:, 0]]
 
 # preparing document-term matrix
 dictionary = corpora.Dictionary(data_clean)
@@ -31,8 +33,8 @@ doc_term_matrix = [dictionary.doc2bow(doc) for doc in data_clean]
 
 # running LDA model
 Lda = gensim.models.ldamodel.LdaModel
-lda_model = Lda(doc_term_matrix, num_topics=10, id2word=dictionary, passes=50)
+lda_model = Lda(doc_term_matrix, num_topics=5, id2word=dictionary, passes=50)
 
 # results
-print(lda_model.print_topics(num_topics=10, num_words=5))
+print(lda_model.print_topics(num_topics=5, num_words=5))
 

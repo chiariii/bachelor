@@ -20,13 +20,13 @@ for subreddit123 in subreddit_List:
 
     print(subreddit)
 
-    with open(f"{subreddit123}_Comments.csv", mode='w', encoding='utf-8', newline='') as file:
+    with open(f"{subreddit123}_Posts.csv", mode='w', encoding='utf-8', newline='') as file:
         csv_writer = csv.writer(file)
 
         # --------------------------------------
 
         # Choose if you want to search for posts (true) or comments (false)
-        post_analysis = False
+        post_analysis = True
 
         # --------------------------------------
 
