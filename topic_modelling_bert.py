@@ -1,25 +1,14 @@
-from datasets import load_dataset
 from bertopic import BERTopic
-from sklearn.feature_extraction.text import CountVectorizer
+import pandas as pd
+import numpy as np
 
-data = load_dataset('jamescalam/python-reddit')
-data = data.filter(
-    lambda x: True if len(x['selftext']) > 30 else 0
-)
+tweets_trump = pd.read_csv("Data/Ethic_Moral_Psychology/Comments/AIethics_Comments.csv", engine='python')
+tweet_list = tweets_trump.iloc[:, 0].tolist()
+
+topic_model = BERTopic(language="english")
+
+topics, probs = topic_model.fit_transform(tweet_list)
+
+print(topic_model.get_topic_info())
 
 
-# we add this to remove stopwords
-vectorizer_model = CountVectorizer(ngram_range=(1, 2), stop_words="english")
-
-model = BERTopic(
-    vectorizer_model=vectorizer_model,
-    language='english', calculate_probabilities=True,
-    verbose=True
-)
-topics, probs = model.fit_transform(data)
-
-freq = model.get_topic_info()
-freq.head(10)
-
-# https://www.pinecone.io/learn/bertopic/
-# https://blog.deepgram.com/python-topic-modeling-with-a-bert-model/

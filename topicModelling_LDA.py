@@ -7,13 +7,15 @@ from gensim import corpora
 import os
 import re
 
-# Load the data
-csv_file_path = os.path.join("Posts", "AIethics_Posts.csv")
-data = pd.read_csv(csv_file_path)
-data.drop_duplicates(inplace=True)
+# Set the directory path where the CSV files are located
+directory_path = "Data/Ethic_Moral_Psychology/Posts"
 
-# Cleaning and preprocessing
+# Get the list of CSV files in the directory
+csv_files = [file for file in os.listdir(directory_path) if file.endswith(".csv")]
+
+# Cleaning and preprocessing functions
 stop = set(stopwords.words('english'))
+# stop.add('like')
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
 
@@ -31,20 +33,36 @@ def clean(doc):
     return normalized
 
 
-data_clean = [clean(doc).split() for doc in data.iloc[:, 0]]
+# Combine data from all non-empty CSV files
+combined_data = []
 
-# preparing document-term matrix
-dictionary = corpora.Dictionary(data_clean)
-# more methods for doc2bow (only bag of words) maybe find a newer?
+for csv_file in csv_files:
+    # Load the data
+    csv_file_path = os.path.join(directory_path, csv_file)
+    data = pd.read_csv(csv_file_path)
+    data.drop_duplicates(inplace=True)
 
-doc_term_matrix = [dictionary.doc2bow(doc) for doc in data_clean]
+    # Clean and preprocess the data
+    data_clean = [clean(doc).split() for doc in data.iloc[:, 0]]
 
-# running LDA model
+    # Add cleaned data to combined_data
+    combined_data.extend(data_clean)
+
+# Preparing document-term matrix
+dictionary = corpora.Dictionary(combined_data)
+doc_term_matrix = [dictionary.doc2bow(doc) for doc in combined_data]
+
+# Running LDA model
 Lda = gensim.models.ldamodel.LdaModel
-lda_model = Lda(doc_term_matrix, num_topics=2, id2word=dictionary,
-                passes=100)  # higher number of passes -> more precise?
+lda_model = Lda(doc_term_matrix, num_topics=5, id2word=dictionary, passes=100)
 
-# results
-print(lda_model.print_topics(num_topics=2, num_words=3))
+# Print the results
+print(lda_model.print_topics(num_topics=5, num_words=3))
+
+
+
+
+
+
 
 
