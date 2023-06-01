@@ -29,8 +29,11 @@ for root, directories, files in os.walk(directory_path):
 combined_data = ' '.join(combined_data)
 
 stop = set(stopwords.words('english'))
+stop.add('robot')
+stop.add('human')
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
+
 def clean(doc):
     doc = re.sub(r'http\S+', '', doc)  # filters links
     doc = re.sub('\s +', '', doc)  # removes extra whites
@@ -43,17 +46,16 @@ def clean(doc):
     normalized = " ".join(lemma.lemmatize(word) for word in punc_free.split())
     return normalized
 
-combined_data = clean(combined_data)
-
+# combined_data = clean(combined_data)
 print(f"Files included: {counter_files}")
 print(f"Rows included: {counter_rows}")
 
 language = 'en'
-max_ngram_size = 1
-deduplication_thresold = 0.7
+max_ngram_size = 2
+deduplication_thresold = 0.3
 deduplication_algo = 'seqm'
 windowSize = 1
-numOfKeywords = 30
+numOfKeywords = 10
 
 custom_kw_extractor = yake.KeywordExtractor(lan=language, n=max_ngram_size, dedupLim=deduplication_thresold,
                                             dedupFunc=deduplication_algo, windowsSize=windowSize, top=numOfKeywords,
