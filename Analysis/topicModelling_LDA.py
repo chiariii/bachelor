@@ -7,15 +7,8 @@ from gensim import corpora
 import os
 import re
 
-# Set the directory path where the CSV files are located
-directory_path = "Data/Ethic_Moral_Psychology/Posts"
-
-# Get the list of CSV files in the directory
-csv_files = [file for file in os.listdir(directory_path) if file.endswith(".csv")]
-
 # Cleaning and preprocessing functions
 stop = set(stopwords.words('english'))
-# stop.add('like')
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
 
@@ -36,28 +29,35 @@ def clean(doc):
 # Combine data from all non-empty CSV files
 combined_data = []
 
-for csv_file in csv_files:
-    # Load the data
-    csv_file_path = os.path.join(directory_path, csv_file)
-    data = pd.read_csv(csv_file_path)
-    data.drop_duplicates(inplace=True)
+# Set the directory path where the CSV files are located
+directory_path = "../Data"
 
-    # Clean and preprocess the data
-    data_clean = [clean(doc).split() for doc in data.iloc[:, 0]]
+for root, directories, files in os.walk(directory_path):
+    for file in files:
+        if file.endswith(".csv"):
+            # Load the data
+            csv_file_path = os.path.join(root, file)
+            data = pd.read_csv(csv_file_path, header=None)
+            data.drop_duplicates(inplace=True)
 
-    # Add cleaned data to combined_data
-    combined_data.extend(data_clean)
+            # Clean and preprocess the data
+            data_clean = [clean(doc).split() for doc in data.iloc[:, 0]]
+
+            # Add cleaned data to combined_data
+            combined_data.extend(data_clean)
 
 # Preparing document-term matrix
 dictionary = corpora.Dictionary(combined_data)
 doc_term_matrix = [dictionary.doc2bow(doc) for doc in combined_data]
 
+num = 3
+
 # Running LDA model
 Lda = gensim.models.ldamodel.LdaModel
-lda_model = Lda(doc_term_matrix, num_topics=5, id2word=dictionary, passes=100)
+lda_model = Lda(doc_term_matrix, num_topics=num, id2word=dictionary, passes=100)
 
 # Print the results
-print(lda_model.print_topics(num_topics=5, num_words=3))
+print(lda_model.print_topics(num_topics=num, num_words=5))
 
 
 
