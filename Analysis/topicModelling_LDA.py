@@ -6,9 +6,11 @@ import gensim
 from gensim import corpora
 import os
 import re
+import csv
 
 # Cleaning and preprocessing functions
 stop = set(stopwords.words('english'))
+
 exclude = set(string.punctuation)
 lemma = WordNetLemmatizer()
 
@@ -50,14 +52,20 @@ for root, directories, files in os.walk(directory_path):
 dictionary = corpora.Dictionary(combined_data)
 doc_term_matrix = [dictionary.doc2bow(doc) for doc in combined_data]
 
-num = 3
+num = 30
 
 # Running LDA model
 Lda = gensim.models.ldamodel.LdaModel
-lda_model = Lda(doc_term_matrix, num_topics=num, id2word=dictionary, passes=100)
+lda_model = Lda(doc_term_matrix, num_topics=num, id2word=dictionary, passes=150)
 
 # Print the results
 print(lda_model.print_topics(num_topics=num, num_words=5))
+
+# with open('Results_LDA.csv', 'a', newline='') as file:
+#     writer = csv.writer(file)
+#     writer.writerow(['Data', 'Topics'])
+#     writer.writerow([directory_path, lda_model.print_topics(num_topics=num, num_words=3)])
+
 
 
 
