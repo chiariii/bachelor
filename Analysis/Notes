@@ -1,0 +1,56 @@
+Immer Clean Data vs. Normale Data
+
+Round 1:
+- nach Spielen einfach mal ein einheitlicher Versuch mit Parametern
+
+    max_ngram_size = 3
+    deduplication_thresold = 0.9
+    windowSize = 2
+    numOfKeywords = 15
+
+Round 2:
+- Anzahl Keywords angepasst an Größe des Inputs. Gleiche Parameter wie Round 1
+
+    max_ngram_size = 3
+    deduplication_thresold = 0.9
+    windowSize = 2
+
+Round 3:
+    max_ngram_size = 4
+    deduplication_thresold = 0.9
+    windowSize = 2
+
+Round 4:
+    max_ngram_size = 4
+    deduplication_thresold = 0.5
+    windowSize = 2
+
+Round 5:
+    max_ngram_size = 4
+    deduplication_thresold = 0.3
+    windowSize = 2
+
+Round 6:
+    max_ngram_size = 4
+    deduplication_thresold = 0.5
+    windowSize = 1
+
+Round 7:
+    max_ngram_size = 3
+    deduplication_thresold = 0.9
+    windowSize = 1
+
+Round 8:
+    max_ngram_size = 1
+    deduplication_thresold = 0.9
+    windowSize = 1
+
+Round 9:
+    max_ngram_size = 1
+    deduplication_thresold = 0.3
+    windowSize = 1
+
+Round 10:
+    max_ngram_size = 1
+    deduplication_thresold = 0.5
+    windowSize = 2

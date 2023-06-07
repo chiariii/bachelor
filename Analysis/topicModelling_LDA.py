@@ -61,10 +61,10 @@ lda_model = Lda(doc_term_matrix, num_topics=num, id2word=dictionary, passes=150)
 # Print the results
 print(lda_model.print_topics(num_topics=num, num_words=5))
 
-# with open('Results_LDA.csv', 'a', newline='') as file:
-#     writer = csv.writer(file)
-#     writer.writerow(['Data', 'Topics'])
-#     writer.writerow([directory_path, lda_model.print_topics(num_topics=num, num_words=3)])
+with open('Results_LDA.csv', 'a', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Data', 'Topics'])
+    writer.writerow([directory_path, lda_model.print_topics(num_topics=num, num_words=3)])
 
 
 
