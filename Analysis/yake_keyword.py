@@ -60,19 +60,19 @@ for dir_path in directory_path:
     language = 'en'
     deduplication_algo = 'seqm'
 
-    numOfKeywords = 0
+    numOfKeywords = 15
 
-    if counter_rows <= 500:
-        numOfKeywords = 10
-    if 500 < counter_rows <= 1000:
-        numOfKeywords = 15
-    if 1000 < counter_rows <= 2000:
-        numOfKeywords = 20
-    if counter_rows > 2000:
-        numOfKeywords = 25
+    # if counter_rows <= 500:
+    #     numOfKeywords = 10
+    # if 500 < counter_rows <= 1000:
+    #     numOfKeywords = 15
+    # if 1000 < counter_rows <= 2000:
+    #     numOfKeywords = 20
+    # if counter_rows > 2000:
+    #     numOfKeywords = 25
 
-    max_ngram_size = 1
-    deduplication_thresold = 0.5
+    max_ngram_size = 3
+    deduplication_thresold = 0.9
     windowSize = 2
 
 

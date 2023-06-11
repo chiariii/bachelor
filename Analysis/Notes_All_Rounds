@@ -8,6 +8,9 @@ Round 1:
     windowSize = 2
     numOfKeywords = 15
 
+    Clean: 22
+    Normal: 11
+
 Round 2:
 - Anzahl Keywords angepasst an Größe des Inputs. Gleiche Parameter wie Round 1
 
@@ -15,42 +18,69 @@ Round 2:
     deduplication_thresold = 0.9
     windowSize = 2
 
+    Clean: 21
+    Normal: 14
+
 Round 3:
     max_ngram_size = 4
     deduplication_thresold = 0.9
     windowSize = 2
+
+    Clean: 1
+    Normal: 8
 
 Round 4:
     max_ngram_size = 4
     deduplication_thresold = 0.5
     windowSize = 2
 
+    Clean: 1
+    Normal: 8
+
 Round 5:
     max_ngram_size = 4
     deduplication_thresold = 0.3
     windowSize = 2
+
+    Clean: 2
+    Normal: 9
 
 Round 6:
     max_ngram_size = 4
     deduplication_thresold = 0.5
     windowSize = 1
 
+    Clean: 1
+    Normal: 6
+
 Round 7:
     max_ngram_size = 3
     deduplication_thresold = 0.9
     windowSize = 1
+
+    Clean: 21
+    Normal: 14
 
 Round 8:
     max_ngram_size = 1
     deduplication_thresold = 0.9
     windowSize = 1
 
+    Clean: 3
+    Normal: 4
+
 Round 9:
     max_ngram_size = 1
     deduplication_thresold = 0.3
     windowSize = 1
 
+    Clean: 6
+    Normal: 6
+
 Round 10:
     max_ngram_size = 1
     deduplication_thresold = 0.5
     windowSize = 2
+
+    Clean: 4
+    Normal: 3

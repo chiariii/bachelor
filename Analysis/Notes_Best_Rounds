@@ -1,0 +1,28 @@
+Round 1:
+- nach Spielen einfach mal ein einheitlicher Versuch mit Parametern
+
+    max_ngram_size = 3
+    deduplication_thresold = 0.9
+    windowSize = 2
+    numOfKeywords = 15
+
+    Clean: 22
+    Normal: 11
+
+Round 2:
+- Anzahl Keywords angepasst an Größe des Inputs. Gleiche Parameter wie Round 1
+
+    max_ngram_size = 3
+    deduplication_thresold = 0.9
+    windowSize = 2
+
+    Clean: 21
+    Normal: 14
+
+Round 7:
+    max_ngram_size = 3
+    deduplication_thresold = 0.9
+    windowSize = 1
+
+    Clean: 21
+    Normal: 14
