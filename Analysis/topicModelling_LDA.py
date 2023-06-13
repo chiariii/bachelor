@@ -21,56 +21,60 @@ def clean(doc):
     doc = re.sub('[^a-zA-Z0-9 ]+', '', doc)  # removes special characters
     doc = re.sub('<.* ? >', '', doc)  # removes html tags
     doc = re.sub('\w\.-]+ @ [\w\.-]+\.\w +', '', doc)  # removes email addresses
-    doc = re.sub('# [_]*[a-z]+','', doc)  # removes hashtags
+    doc = re.sub('# [_]*[a-z]+', '', doc)  # removes hashtags
     stop_free = " ".join([i for i in doc.lower().split() if i not in stop])
     punc_free = ''.join(ch for ch in stop_free if ch not in exclude)
     normalized = " ".join(lemma.lemmatize(word) for word in punc_free.split())
     return normalized
 
 
-# Combine data from all non-empty CSV files
-combined_data = []
-
-# Set the directory path where the CSV files are located
-directory_path = "../Data"
-
-for root, directories, files in os.walk(directory_path):
-    for file in files:
-        if file.endswith(".csv"):
-            # Load the data
-            csv_file_path = os.path.join(root, file)
-            data = pd.read_csv(csv_file_path, header=None)
-            data.drop_duplicates(inplace=True)
-
-            # Clean and preprocess the data
-            data_clean = [clean(doc).split() for doc in data.iloc[:, 0]]
-
-            # Add cleaned data to combined_data
-            combined_data.extend(data_clean)
-
-# Preparing document-term matrix
-dictionary = corpora.Dictionary(combined_data)
-doc_term_matrix = [dictionary.doc2bow(doc) for doc in combined_data]
-
-num = 30
-
-# Running LDA model
-Lda = gensim.models.ldamodel.LdaModel
-lda_model = Lda(doc_term_matrix, num_topics=num, id2word=dictionary, passes=150)
-
-# Print the results
-print(lda_model.print_topics(num_topics=num, num_words=5))
-
-with open('Results_LDA.csv', 'a', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['Data', 'Topics'])
-    writer.writerow([directory_path, lda_model.print_topics(num_topics=num, num_words=3)])
+directory_path = ["../Data", "../Data/Tech", "../Data/Ethic_Moral_Psychology", "../Data/Future", "../Data/Robot"]
 
 
+for dir_path in directory_path:
+    # Combine data from all non-empty CSV files
+    combined_data = []
 
+    counter_rows = 0
 
+    for root, directories, files in os.walk(dir_path):
+        for file in files:
+            if file.endswith(".csv"):
+                # Load the data
+                csv_file_path = os.path.join(root, file)
+                data = pd.read_csv(csv_file_path, header=None)
+                data.drop_duplicates(inplace=True)
 
+                # Clean and preprocess the data
+                data_clean = [clean(doc).split() for doc in data.iloc[:, 0]]
 
+                # Add cleaned data to combined_data
+                combined_data.extend(data_clean)
 
+                counter_rows += len(data)
 
+    print(counter_rows)
 
+    # Preparing document-term matrix
+    dictionary = corpora.Dictionary(combined_data)
+    doc_term_matrix = [dictionary.doc2bow(doc) for doc in combined_data]
+
+    num_top = 0
+    num_word = 7
+
+    if counter_rows <= 500:
+        num_top = 5
+    if 500 < counter_rows <= 2000:
+        num_top = 10
+    if counter_rows > 2000:
+        num_top = 15
+
+    # Running LDA model
+    Lda = gensim.models.ldamodel.LdaModel
+    lda_model = Lda(doc_term_matrix, num_topics=num_top, id2word=dictionary, passes=150)
+
+    with open('Results_LDA.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Data', 'Topics'])
+        writer.writerow([dir_path, lda_model.print_topics(num_topics=num_top, num_words=num_word)])
+        print(f"{dir_path} is done")
