@@ -16,7 +16,7 @@ Round 2:
     deduplication_thresold = 0.9
     windowSize = 2
 
-    Clean: 21
+    !Clean: 21!
     Normal: 14
 
 Round 7:
@@ -26,3 +26,6 @@ Round 7:
 
     Clean: 21
     Normal: 14
+
+- schauen welches Cleaning Yake benutzt
+- https://docs.google.com/document/d/1ce3idmkQlobG4ax-Phft3SAk-Bkkhb3MRxT095D-iQE/edit#heading=h.w43ejiopm5xu
