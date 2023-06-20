@@ -8,12 +8,20 @@ reddit = praw.Reddit(client_id='HFe49kpE24lryrjVxKvl4g',
                      username='Famous-Jellyfish8889',
                      password='bachelor.0401')
 
-subreddit_List = ['loona_robot', 'VectorRobot', 'RobotVacuums', 'litterrobot', 'RobotNews', 'robot',
-                  'robots', 'robotics', 'shittyrobots', 'Robot_IRL', 'TechFuture', 'FutureConsequences',
-                  'AutomotiveFuture', 'Future_Technology', 'Futurology', 'Cyberpunk', 'DystopianFuture', 'Automate',
-                  'singularity', 'technology', 'science', 'askphilosophy', 'philosophy', 'psychology',
-                  'EthicalService22', 'moral', 'moraladvice', 'MorallyAmbiguous', 'Alpha_Support', 'Morality',
-                  'EthicalTreatmentofAI', 'ethicalAI', 'AIethics']
+# RQ 1
+# subreddit_List = ['loona_robot', 'VectorRobot', 'RobotVacuums', 'litterrobot', 'RobotNews', 'robot',
+#                   'robots', 'robotics', 'shittyrobots', 'Robot_IRL', 'TechFuture', 'FutureConsequences',
+#                   'AutomotiveFuture', 'Future_Technology', 'Futurology', 'Cyberpunk', 'DystopianFuture', 'Automate',
+#                   'singularity', 'technology', 'science', 'askphilosophy', 'philosophy', 'psychology',
+#                   'EthicalService22', 'moral', 'moraladvice', 'MorallyAmbiguous', 'Alpha_Support', 'Morality',
+#                   'EthicalTreatmentofAI', 'ethicalAI', 'AIethics']
+
+# RQ 2
+subreddit_List = ['loona_robot', 'VectorRobot', 'RobotEmo', 'AnkiVector', 'ankivectordevelopers',
+                  'RobotVacuums', 'litterrobot', 'RobotVacuumCleaners', 'SmoRobot', 'TemiRobot',
+                  'JoolaInfinityRobot', 'BestRobotVacuumReddit', 'Roborock', 'roboticLawnmowers',
+                  'RoboTaxi', 'TeslaRobot', 'socialrobots', 'IndustrialRobotics', 'industrialrobots']
+
 
 for subreddit123 in subreddit_List:
     subreddit = reddit.subreddit(subreddit123)
@@ -94,7 +102,7 @@ for subreddit123 in subreddit_List:
             else:  # if you want to search for posts in the subreddit
                 if robotic_subreddit:
                     for keyword in keywords_posts:
-                        empty_list.extend(subreddit.search(keyword, limit=20))
+                        empty_list.extend(subreddit.search(keyword, limit=None))
                 else:
                     for keyword in keywords_posts:
                         empty_list.extend(subreddit.search(f"{keyword} AND {robot_string}", limit=None))
