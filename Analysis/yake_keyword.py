@@ -7,10 +7,12 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import string
 import csv
 
-directory_path = ["../Data", "../Data/Tech", "../Data/Tech/Posts", "../Data/Tech/Comments",
-                  "../Data/Ethic_Moral_Psychology", "../Data/Ethic_Moral_Psychology/Posts",
-                  "../Data/Ethic_Moral_Psychology/Comments", "../Data/Future", "../Data/Future/Posts",
-                  "../Data/Future/Comments", "../Data/Robot/Posts", "../Data/Robot/Comments", "../Data/Robot"]
+# directory_path = ["../Data", "../Data/Tech", "../Data/Tech/Posts", "../Data/Tech/Comments",
+#                   "../Data/Ethic_Moral_Psychology", "../Data/Ethic_Moral_Psychology/Posts",
+#                   "../Data/Ethic_Moral_Psychology/Comments", "../Data/Future", "../Data/Future/Posts",
+#                   "../Data/Future/Comments", "../Data/Robot/Posts", "../Data/Robot/Comments", "../Data/Robot"]
+
+directory_path = ["../Data/RQ2/Social-Zoomorphic", "../Data/RQ2/Service-Mechanoid"]
 
 for dir_path in directory_path:
     csv_files = [file for file in os.listdir(dir_path) if file.endswith(".csv")]
@@ -62,14 +64,14 @@ for dir_path in directory_path:
 
     numOfKeywords = 15
 
-    # if counter_rows <= 500:
-    #     numOfKeywords = 10
-    # if 500 < counter_rows <= 1000:
-    #     numOfKeywords = 15
-    # if 1000 < counter_rows <= 2000:
-    #     numOfKeywords = 20
-    # if counter_rows > 2000:
-    #     numOfKeywords = 25
+    if counter_rows <= 500:
+        numOfKeywords = 10
+    if 500 < counter_rows <= 1000:
+        numOfKeywords = 15
+    if 1000 < counter_rows <= 2000:
+        numOfKeywords = 20
+    if counter_rows > 2000:
+        numOfKeywords = 25
 
     max_ngram_size = 3
     deduplication_thresold = 0.9
@@ -84,10 +86,6 @@ for dir_path in directory_path:
 
     with open('Results_topic_modelling.csv', 'a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Daten', 'Files', 'Rows','max_ngram_size', 'deduplication_threshold', 'window_size',
-                         'num_of_keywords', 'Keywords'])
-        writer.writerow([dir_path,counter_files,counter_rows, max_ngram_size,deduplication_thresold, windowSize,
-                         numOfKeywords, keywords])
+        writer.writerow(['Daten', 'Files', 'Rows', 'num_of_keywords', 'Keywords'])
+        writer.writerow([dir_path,counter_files,counter_rows, numOfKeywords, *keywords])
 
-    for kw in keywords:
-        print(kw)
