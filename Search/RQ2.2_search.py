@@ -8,19 +8,20 @@ reddit = praw.Reddit(client_id='HFe49kpE24lryrjVxKvl4g',
                      username='Famous-Jellyfish8889',
                      password='bachelor.0401')
 
-keyword_RQ2 = ['social robot', 'service robot', 'industrial robot', 'zoomorphic robot', 'mechanoid robot',
-               'humanlike robot']
+keyword_RQ2 = ['"social robot"', '"service robot"', '"industrial robot"', '"zoomorphic robot"', '"mechanoid robot"',
+               '"humanlike robot"']
+print(keyword_RQ2)
 
-for keyword123 in keyword_RQ2:
+for keyword_RQ in keyword_RQ2:
     subreddit = reddit.subreddit('all')
 
-    with open(f"{keyword123}_Posts.csv", mode='w', encoding='utf-8', newline='') as file:
+    with open(f"{keyword_RQ}_Comments.csv", mode='w', encoding='utf-8', newline='') as file:
         csv_writer = csv.writer(file)
 
         # --------------------------------------
 
         # Choose if you want to search for posts (true) or comments (false)
-        post_analysis = None
+        post_analysis = False
 
         # --------------------------------------
 
@@ -30,20 +31,23 @@ for keyword123 in keyword_RQ2:
         # keywords you want to search for in a subreddit when looking for comments
         keywords_comments = None
 
-        robot_string = 'robot'
-
         # 26
-        keyword_list = ['trust', 'reliable', 'predictable', 'consistent', 'capable', 'skilled', 'competent',
+        keyword_trust_list = ['trust', 'reliable', 'predictable', 'consistent', 'capable', 'skilled', 'competent',
                         'dependable', 'capacity', 'performance', 'ethical', 'respectable', 'principled',
                         'sincere', 'genuine', 'authentic', 'cheat', 'secure', 'fair', 'candid', 'moral',
                         'help', 'aid', 'rely', 'trustworthy', 'honest']
 
         if post_analysis:
-            keywords_posts = keyword_list
+            keywords_posts = keyword_trust_list
             keywords_comments = []
         else:
             keywords_posts = []
-            keywords_comments = keyword_list
+            keywords_comments = keyword_trust_list
+
+        print("Com")
+        print(keywords_comments)
+        print("Pos")
+        print(keywords_posts)
 
         # Checks if the keywords are in the comments/replies
         # Returns a list with the matching comments/replies
@@ -51,7 +55,7 @@ for keyword123 in keyword_RQ2:
 
             comment_list = []
 
-            if keyword123 in input_comment.body:
+            if keyword_RQ in input_comment.body:
                 if any(single_keyword in input_comment.body for single_keyword in keywords_comments):
                     comment_list.append(input_comment.body)
 
@@ -64,7 +68,7 @@ for keyword123 in keyword_RQ2:
                 empty_list = subreddit.new(limit=None)
             else:  # if you want to search for posts in the subreddit
                 for keyword in keywords_posts:
-                    empty_list.extend(subreddit.search(f"{keyword123} AND {keyword}", limit=None))
+                    empty_list.extend(subreddit.search(f"{keyword_RQ} AND {keyword}", limit=None))
             return empty_list
 
 
@@ -95,4 +99,4 @@ for keyword123 in keyword_RQ2:
                 counter += 1
                 print(counter)
 
-    file.close()
+
