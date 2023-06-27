@@ -17,16 +17,15 @@ reddit = praw.Reddit(client_id='HFe49kpE24lryrjVxKvl4g',
 #                   'EthicalTreatmentofAI', 'ethicalAI', 'AIethics']
 
 # RQ 2
-subreddit_List = ['loona_robot', 'VectorRobot', 'RobotEmo', 'AnkiVector', 'ankivectordevelopers',
-                  'RobotVacuums', 'litterrobot', 'RobotVacuumCleaners', 'SmoRobot', 'TemiRobot',
-                  'JoolaInfinityRobot', 'BestRobotVacuumReddit', 'Roborock', 'roboticLawnmowers',
-                  'RoboTaxi', 'TeslaRobot', 'socialrobots', 'IndustrialRobotics', 'industrialrobots']
+# subreddit_List = ['loona_robot', 'VectorRobot', 'RobotEmo', 'AnkiVector', 'ankivectordevelopers',
+#                   'RobotVacuums', 'litterrobot', 'RobotVacuumCleaners', 'SmoRobot', 'TemiRobot',
+#                   'JoolaInfinityRobot', 'BestRobotVacuumReddit', 'Roborock', 'roboticLawnmowers',
+#                   'RoboTaxi', 'TeslaRobot', 'socialrobots', 'IndustrialRobotics', 'industrialrobots']
 
+subreddit_List = ['robotics']
 
 for subreddit123 in subreddit_List:
     subreddit = reddit.subreddit(subreddit123)
-
-    print(subreddit)
 
     with open(f"{subreddit123}_Posts.csv", mode='w', encoding='utf-8', newline='') as file:
         csv_writer = csv.writer(file)
@@ -34,7 +33,7 @@ for subreddit123 in subreddit_List:
         # --------------------------------------
 
         # Choose if you want to search for posts (true) or comments (false)
-        post_analysis = True
+        post_analysis = False
 
         # --------------------------------------
 
@@ -61,10 +60,12 @@ for subreddit123 in subreddit_List:
                                       'Morality', 'EthicalTreatmentofAI', 'ethicalAI', 'AIethics']
 
         # 26
-        keyword_list = ['trust', 'reliable', 'predictable', 'consistent', 'capable', 'skilled', 'competent',
-                        'dependable', 'capacity', 'performance', 'ethical', 'respectable', 'principled',
-                        'sincere', 'genuine', 'authentic', 'cheat', 'secure', 'fair', 'candid', 'moral',
-                        'help', 'aid', 'rely', 'trustworthy', 'honest']
+        # keyword_list = ['trust', 'reliable', 'predictable', 'consistent', 'capable', 'skilled', 'competent',
+        #                 'dependable', 'capacity', 'performance', 'ethical', 'respectable', 'principled',
+        #                 'sincere', 'genuine', 'authentic', 'cheat', 'secure', 'fair', 'candid', 'moral',
+        #                 'help', 'aid', 'rely', 'trustworthy', 'honest']
+
+        keyword_list = ['trust']
 
         if subreddit in non_robotic_subreddit_list:
             robotic_subreddit = False

@@ -12,7 +12,8 @@ import csv
 #                   "../Data/Ethic_Moral_Psychology/Comments", "../Data/Future", "../Data/Future/Posts",
 #                   "../Data/Future/Comments", "../Data/Robot/Posts", "../Data/Robot/Comments", "../Data/Robot"]
 
-directory_path = ["../Data/RQ2/Social-Zoomorphic", "../Data/RQ2/Service-Mechanoid"]
+directory_path = ["../Data/RQ2/Human", "../Data/RQ2/Industrial", "../Data/RQ2/Mechanoid", "../Data/RQ2/Service",
+                  "../Data/RQ2/Social", "../Data/RQ2/Zoomorphic"]
 
 for dir_path in directory_path:
     csv_files = [file for file in os.listdir(dir_path) if file.endswith(".csv")]
@@ -76,7 +77,6 @@ for dir_path in directory_path:
     max_ngram_size = 3
     deduplication_thresold = 0.9
     windowSize = 2
-
 
     custom_kw_extractor = yake.KeywordExtractor(lan=language, n=max_ngram_size, dedupLim=deduplication_thresold,
                                                 dedupFunc=deduplication_algo, windowsSize=windowSize, top=numOfKeywords,
