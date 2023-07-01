@@ -13,7 +13,7 @@ import csv
 #                   "../Data/Future/Comments", "../Data/Robot/Posts", "../Data/Robot/Comments", "../Data/Robot"]
 
 directory_path = ["../Data/RQ2/Human", "../Data/RQ2/Industrial", "../Data/RQ2/Mechanoid", "../Data/RQ2/Service",
-                  "../Data/RQ2/Social", "../Data/RQ2/Zoomorphic"]
+                  "../Data/RQ2/Social", "../Data/RQ2/Matrix/ServiceMech", "../Data/RQ2/Matrix/SocialZoo"]
 
 for dir_path in directory_path:
     csv_files = [file for file in os.listdir(dir_path) if file.endswith(".csv")]
@@ -38,6 +38,12 @@ for dir_path in directory_path:
     combined_data = ' '.join(combined_data)
 
     stop = set(stopwords.words('english'))
+    stop.add('litter')
+    stop.add('vacuum')
+    stop.add('vector')
+    stop.add('anki')
+    stop.add('market')
+
     exclude = set(string.punctuation)
     lemma = WordNetLemmatizer()
 
@@ -63,9 +69,13 @@ for dir_path in directory_path:
     language = 'en'
     deduplication_algo = 'seqm'
 
-    numOfKeywords = 15
+    numOfKeywords = None
 
-    if counter_rows <= 500:
+    if counter_rows <= 50:
+        numOfKeywords = 2
+    if 50 < counter_rows <= 200:
+        numOfKeywords = 5
+    if 200 < counter_rows <= 500:
         numOfKeywords = 10
     if 500 < counter_rows <= 1000:
         numOfKeywords = 15
@@ -84,7 +94,7 @@ for dir_path in directory_path:
 
     keywords = custom_kw_extractor.extract_keywords(combined_data)
 
-    with open('Results_topic_modelling.csv', 'a', newline='') as file:
+    with open('Results_keyword.csv', 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Daten', 'Files', 'Rows', 'num_of_keywords', 'Keywords'])
         writer.writerow([dir_path,counter_files,counter_rows, numOfKeywords, *keywords])

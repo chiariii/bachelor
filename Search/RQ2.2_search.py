@@ -8,8 +8,8 @@ reddit = praw.Reddit(client_id='HFe49kpE24lryrjVxKvl4g',
                      username='Famous-Jellyfish8889',
                      password='bachelor.0401')
 
-keyword_RQ2 = ['"Social robot"', '"service robot"', '"industrial robot"', '"zoomorphic robot"', '"mechanoid robot"',
-               '"humanlike robot"']
+keyword_RQ2 = ['social robot', 'service robot', 'industrial robot', 'zoomorphic robot', 'mechanoid robot',
+               'humanlike robot']
 
 # Checks if the keywords are in the comments/replies
 # Returns a list with the matching comments/replies
@@ -19,11 +19,11 @@ for keyword_RQ in keyword_RQ2:
 
     subreddit = reddit.subreddit('all')
 
-    with open(f"{keyword_RQ}_Comments.csv", mode='w', encoding='utf-8', newline='') as file:
+    with open(f"{keyword_RQ}_Posts.csv", mode='w', encoding='utf-8', newline='') as file:
         csv_writer = csv.writer(file)
 
         # Choose if you want to search for posts (true) or comments (false)
-        post_analysis = False
+        post_analysis = True
 
         # Keywords you want to search for in a subreddit when looking for posts
         keywords_posts = None
@@ -52,14 +52,13 @@ for keyword_RQ in keyword_RQ2:
                     comment_list.append(input_comment.body)
             return comment_list
 
-
         # Goes through all the posts with the keyword(s) and prints its comments
         def collect_posts(empty_list):
             if not keywords_posts:  # if you want to search for comments in the entire subreddit
                 empty_list = subreddit.new(limit=None)
             else:  # if you want to search for posts in the subreddit
                 for keyword in keywords_posts:
-                    empty_list.extend(subreddit.search(f"{keyword_RQ} AND {keyword}", limit=None))
+                    empty_list.extend(subreddit.search('"' + keyword_RQ + '"' + ' AND ' + keyword, limit=None))
             return empty_list
 
 
@@ -78,6 +77,7 @@ for keyword_RQ in keyword_RQ2:
 
             for item in posts:
                 post = reddit.submission(item.id)
+                print(post)
                 post.comments.replace_more(limit=None)
 
                 list_of_comments = []

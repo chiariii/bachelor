@@ -28,7 +28,7 @@ def clean(doc):
     return normalized
 
 
-directory_path = ["../Data", "../Data/Tech", "../Data/Ethic_Moral_Psychology", "../Data/Future", "../Data/Robot"]
+directory_path = ["../Data/RQ2/Matrix/ServiceMech", "../Data/RQ2/Matrix/SocialZoo"]
 
 
 for dir_path in directory_path:
@@ -60,9 +60,11 @@ for dir_path in directory_path:
     doc_term_matrix = [dictionary.doc2bow(doc) for doc in combined_data]
 
     num_top = 0
-    num_word = 7
+    num_word = 5
 
-    if counter_rows <= 500:
+    if counter_rows <= 100:
+        num_top = 1
+    if 100 < counter_rows <= 500:
         num_top = 5
     if 500 < counter_rows <= 2000:
         num_top = 10
@@ -73,7 +75,7 @@ for dir_path in directory_path:
     Lda = gensim.models.ldamodel.LdaModel
     lda_model = Lda(doc_term_matrix, num_topics=num_top, id2word=dictionary, passes=150)
 
-    with open('Results_LDA.csv', 'a', newline='') as file:
+    with open('Results_LDA1.csv', 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Data', 'Topics'])
         writer.writerow([dir_path, lda_model.print_topics(num_topics=num_top, num_words=num_word)])

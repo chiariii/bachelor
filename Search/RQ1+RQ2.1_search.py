@@ -20,14 +20,16 @@ reddit = praw.Reddit(client_id='HFe49kpE24lryrjVxKvl4g',
 # subreddit_List = ['loona_robot', 'VectorRobot', 'RobotEmo', 'AnkiVector', 'ankivectordevelopers',
 #                   'RobotVacuums', 'litterrobot', 'RobotVacuumCleaners', 'SmoRobot', 'TemiRobot',
 #                   'JoolaInfinityRobot', 'BestRobotVacuumReddit', 'Roborock', 'roboticLawnmowers',
-#                   'RoboTaxi', 'TeslaRobot', 'socialrobots', 'IndustrialRobotics', 'industrialrobots']
+#                   'RoboTaxi', 'TeslaRobot']
 
-subreddit_List = ['robotics']
+# RQ 2.2
+subreddit_List = ['socialrobots', 'IndustrialRobotics', 'industrialrobots', 'IndustrialRobot', 'ServiceRobots',
+                  'servicerobot']
 
 for subreddit123 in subreddit_List:
     subreddit = reddit.subreddit(subreddit123)
 
-    with open(f"{subreddit123}_Posts.csv", mode='w', encoding='utf-8', newline='') as file:
+    with open(f"{subreddit123}_Comments.csv", mode='w', encoding='utf-8', newline='') as file:
         csv_writer = csv.writer(file)
 
         # --------------------------------------
@@ -60,12 +62,10 @@ for subreddit123 in subreddit_List:
                                       'Morality', 'EthicalTreatmentofAI', 'ethicalAI', 'AIethics']
 
         # 26
-        # keyword_list = ['trust', 'reliable', 'predictable', 'consistent', 'capable', 'skilled', 'competent',
-        #                 'dependable', 'capacity', 'performance', 'ethical', 'respectable', 'principled',
-        #                 'sincere', 'genuine', 'authentic', 'cheat', 'secure', 'fair', 'candid', 'moral',
-        #                 'help', 'aid', 'rely', 'trustworthy', 'honest']
-
-        keyword_list = ['trust']
+        keyword_list = ['trust', 'reliable', 'predictable', 'consistent', 'capable', 'skilled', 'competent',
+                        'dependable', 'capacity', 'performance', 'ethical', 'respectable', 'principled',
+                        'sincere', 'genuine', 'authentic', 'cheat', 'secure', 'fair', 'candid', 'moral', 'aid', 'rely',
+                        'trustworthy', 'honest', 'help']
 
         if subreddit in non_robotic_subreddit_list:
             robotic_subreddit = False
